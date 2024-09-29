@@ -50,9 +50,8 @@ public class FileController {
                 fos.write(file.getBytes());
             }
 
-            ProcessBuilder processBuilder = new ProcessBuilder("python", "chunker.py", convFile.getAbsolutePath(),
+            ProcessBuilder processBuilder = new ProcessBuilder("python3", "chunker.py", convFile.getAbsolutePath(),
                     outputFolder);
-            System.out.println("python chunker.py " + convFile.getAbsolutePath() + " " + outputFolder);
             Process process = processBuilder.start();
             int exitCode = process.waitFor();
 

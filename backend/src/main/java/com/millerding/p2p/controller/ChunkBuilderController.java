@@ -36,7 +36,7 @@ public class ChunkBuilderController {
             String outputFilePath = new File(uuidFolder, originalFilename).getAbsolutePath();
             String pythonScriptPath = "builder.py"; // Adjust the path to your Python script if necessary
 
-            ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath, uuidFolder.getAbsolutePath(),
+            ProcessBuilder processBuilder = new ProcessBuilder("python3", pythonScriptPath, uuidFolder.getAbsolutePath(),
                     outputFilePath);
             Process process = processBuilder.start();
 
