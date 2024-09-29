@@ -20,8 +20,11 @@ import org.springframework.web.client.RestTemplate;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
@@ -35,13 +38,31 @@ public class FileController {
     @PostMapping("/upload")
     public ResponseEntity<String> uploadFile(@RequestParam("file") MultipartFile file) {
         String uuid = UUID.randomUUID().toString();
+        String outputFolder = "src/main/resources/cache/";
         try {
+            File outputDir = new File(outputFolder);
+            if (!outputDir.exists()) {
+                outputDir.mkdirs();
+            }
+
             File convFile = new File(file.getOriginalFilename());
             try (FileOutputStream fos = new FileOutputStream(convFile)) {
                 fos.write(file.getBytes());
             }
 
-            List<byte[]> chunks = fcs.chunkFile(convFile.getAbsolutePath());
+            ProcessBuilder processBuilder = new ProcessBuilder("python", "chunker.py", convFile.getAbsolutePath(),
+                    outputFolder);
+            System.out.println("python chunker.py " + convFile.getAbsolutePath() + " " + outputFolder);
+            Process process = processBuilder.start();
+            int exitCode = process.waitFor();
+
+            if (exitCode != 0) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to chunk the file.");
+            }
+
+            List<File> chunkFiles = Arrays.stream(Objects.requireNonNull(outputDir.listFiles()))
+                    .filter(file1 -> file1.getName().startsWith("chunk_") && file1.getName().endsWith(".bin"))
+                    .collect(Collectors.toList());
 
             RestTemplate restTemplate = new RestTemplate();
             List<String> peers = ns.getNodes();
@@ -51,17 +72,13 @@ public class FileController {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No peers available.");
             }
 
-            for (int i = 0; i < chunks.size(); i++) {
+            for (int i = 0; i < chunkFiles.size(); i++) {
                 String peerUrl = peers.get(i % peerCount) + "/receive";
 
-                File chunkFile = new File("chunk_" + i + ".txt");
-                try (FileOutputStream fos = new FileOutputStream(chunkFile)) {
-                    fos.write(chunks.get(i));
-                }
-
+                File chunkFile = chunkFiles.get(i);
                 MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
                 body.add("file", new FileSystemResource(chunkFile));
-                body.add("filename", "chunk_" + i + ".txt");
+                body.add("filename", chunkFile.getName());
                 body.add("uuid", uuid);
 
                 HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body);
@@ -70,17 +87,17 @@ public class FileController {
                 System.out.println(response.getStatusCode() + ": " + response.getBody());
                 if (!response.getStatusCode().is2xxSuccessful()) {
                     return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                            .body("Failed to forward chunk " + i + " to peer: " + peerUrl);
+                            .body("Failed to forward chunk " + chunkFile.getName() + " to peer: " + peerUrl);
                 }
 
                 chunkFile.delete();
             }
 
-            sendMetadata(file.getOriginalFilename(), chunks.size(), uuid, peers);
+            sendMetadata(file.getOriginalFilename(), chunkFiles.size(), uuid, peers);
 
             return ResponseEntity.ok("File uploaded and spread across peers.");
 
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed.");
         }
@@ -125,6 +142,5 @@ public class FileController {
             e.printStackTrace();
         }
     }
-
 
 }

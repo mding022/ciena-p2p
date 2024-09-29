@@ -17,7 +17,6 @@ import org.json.JSONException;
 @RestController
 @CrossOrigin(origins = "localhost:3000")
 public class ChunkBuilderController {
-
     @GetMapping("/build")
     public ResponseEntity<String> combineChunks(@RequestParam("uuid") String uuid) {
         File uuidFolder = new File("src/main/resources/static/" + uuid);
@@ -27,31 +26,28 @@ public class ChunkBuilderController {
 
         File metadataFile = new File(uuidFolder, "metadata.json");
         String originalFilename = null;
-        try {
-            StringBuilder combinedContent = new StringBuilder();
 
+        try {
             byte[] metadataBytes = Files.readAllBytes(metadataFile.toPath());
             String metadata = new String(metadataBytes);
             JSONObject jsonObject = new JSONObject(metadata);
             originalFilename = jsonObject.getString("filename");
 
-            for (int i = 1;; i++) {
-                File chunkFile = new File(uuidFolder, "chunk_" + i + ".txt");
-                if (!chunkFile.exists()) {
-                    break;
-                }
-                byte[] chunkBytes = Files.readAllBytes(chunkFile.toPath());
-                combinedContent.append(new String(chunkBytes));
-            }
+            String outputFilePath = new File(uuidFolder, originalFilename).getAbsolutePath();
+            String pythonScriptPath = "builder.py"; // Adjust the path to your Python script if necessary
 
-            File originalFile = new File(uuidFolder, originalFilename);
-            try (FileOutputStream fos = new FileOutputStream(originalFile)) {
-                fos.write(combinedContent.toString().getBytes());
+            ProcessBuilder processBuilder = new ProcessBuilder("python", pythonScriptPath, uuidFolder.getAbsolutePath(),
+                    outputFilePath);
+            Process process = processBuilder.start();
+
+            int exitCode = process.waitFor();
+            if (exitCode != 0) {
+                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body("Failed to combine chunks using Python script.");
             }
 
             return ResponseEntity.ok("Combined chunks into: " + originalFilename);
-
-        } catch (IOException e) {
+        } catch (IOException | InterruptedException e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Error combining chunks: " + e.getMessage());
         } catch (JSONException e) {
@@ -59,5 +55,4 @@ public class ChunkBuilderController {
                     .body("Error reading metadata: " + e.getMessage());
         }
     }
-
 }

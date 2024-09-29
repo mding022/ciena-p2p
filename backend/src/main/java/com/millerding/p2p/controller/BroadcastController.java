@@ -33,7 +33,7 @@ public class BroadcastController {
         RestTemplate restTemplate = new RestTemplate();
         int self = 0; // prevent it from repeating
         for (String tunnelUrl : ns.getNodes()) {
-            if (self == 0) {
+            if (self == -1) { //TODO: set to 0
                 self++;
             } else {
                 try {
