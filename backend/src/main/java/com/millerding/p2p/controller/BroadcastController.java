@@ -31,17 +31,21 @@ public class BroadcastController {
     @PostMapping("/broadcast")
     public String broadcastRequest(@RequestParam("uuid") String uuid) {
         RestTemplate restTemplate = new RestTemplate();
-        int self = 0; //prevent it from repeating
+        int self = 0; // prevent it from repeating
         for (String tunnelUrl : ns.getNodes()) {
             if (self == 0) {
                 self++;
             } else {
                 try {
-                    String fullUrl = tunnelUrl + "/get_uuid?uuid=" + uuid + "&tunnel=" + tunnelUrl;
-                    ResponseEntity<String> response = restTemplate.getForEntity(fullUrl, String.class);
-                    if (!response.getStatusCode().is2xxSuccessful()) {
-                        return "Failed to request for " + uuid + " from tunnel: " + tunnelUrl;
-                    }
+                    MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+                    body.add("tunnel", ns.getNodes().get(0));
+                    body.add("uuid", uuid);
+
+                    HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body);
+
+                    // Send the file to the specified tunnel URL
+                    ResponseEntity<String> response = restTemplate.postForEntity(tunnelUrl + "/get_uuid", requestEntity,
+                            String.class);
                 } catch (Exception e) {
                     return "Error requesting for " + uuid + " from tunnel: " + tunnelUrl;
                 }

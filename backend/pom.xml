@@ -41,6 +41,13 @@
 			<version>2.0.0</version> <!-- Use the latest stable version -->
 		</dependency>
 
+		<dependency>
+			<groupId>org.json</groupId>
+			<artifactId>json</artifactId>
+			<version>20210307</version>
+		</dependency>
+
+
 		<!-- Logback Implementation -->
 		<dependency>
 			<groupId>ch.qos.logback</groupId>
