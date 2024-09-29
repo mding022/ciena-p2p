@@ -352,7 +352,7 @@ const FileUpload: React.FC = () => {
           <input
             type="text"
             placeholder="https://"
-            className="pl-2 border border-gray-300 rounded-md ml-2"
+            className="pl-2 border border-gray-300 rounded-md ml-2 w-28"
             value={newNode}
             onChange={handleInputChange}
           />
