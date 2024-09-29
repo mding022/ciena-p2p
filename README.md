@@ -1,4 +1,30 @@
 
+# Ciena P2P File Sharing
+
+Ciena's peer-to-peer file sharing protocol challenge for Hack the Hill 2024. Built with Spring Boot for backend, and Next.js for the frontend.
+
+
+
+
+## Deployment
+
+To deploy this project, first make sure you have docker installed.
+Then, run:
+
+```bash
+  docker-compose up --build
+```
+Docker will run both the back and frontend. To run each separately, you can run these for each:
+```bash
+  cd backend
+  mvn spring-boot:run
+```
+```bash
+  cd frontend
+  npm run dev
+```
+The backend runs on localhost:8080 and the frontend runs on localhost:3000.
+
 ## Implementation
 
 - SSHs into a open source tunneling service to generate a random tunnel URL.
