@@ -54,7 +54,7 @@ public class BroadcastController {
         return "Successfully requested for " + uuid;
     }
 
-    @GetMapping("/get_uuid")
+    @PostMapping("/get_uuid")
     public ResponseEntity<String> sendUUID(@RequestParam("uuid") String uuid,
             @RequestParam("tunnel") String tunnelUrl) {
         try {
