@@ -9,19 +9,20 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.json.JSONObject;
 import org.json.JSONException;
 
 @RestController
-@CrossOrigin(origins = "localhost:3000")
+@CrossOrigin(origins = "http://localhost:3000")
 public class ChunkBuilderController {
-    @GetMapping("/build")
-    public ResponseEntity<String> combineChunks(@RequestParam("uuid") String uuid) {
+    @PostMapping("/build")
+    public String combineChunks(@RequestParam("uuid") String uuid) {
         File uuidFolder = new File("src/main/resources/static/" + uuid);
         if (!uuidFolder.exists() || !uuidFolder.isDirectory()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("UUID folder not found.");
+            return null;
         }
 
         File metadataFile = new File(uuidFolder, "metadata.json");
@@ -42,17 +43,14 @@ public class ChunkBuilderController {
 
             int exitCode = process.waitFor();
             if (exitCode != 0) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body("Failed to combine chunks using Python script.");
+                return null;
             }
 
-            return ResponseEntity.ok("Combined chunks into: " + originalFilename);
+            return null;
         } catch (IOException | InterruptedException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error combining chunks: " + e.getMessage());
+            return null;
         } catch (JSONException e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Error reading metadata: " + e.getMessage());
+            return null;
         }
     }
 }

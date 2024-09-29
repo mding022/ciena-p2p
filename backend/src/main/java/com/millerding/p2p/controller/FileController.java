@@ -65,8 +65,8 @@ public class FileController {
 
             RestTemplate restTemplate = new RestTemplate();
             List<String> peers = ns.getNodes();
+            System.out.println("peers:" + peers + " uuid: " + uuid);
             sendMetadata(file.getOriginalFilename(), chunkFiles.size(), uuid, peers);
-            System.out.println("peers:" + peers);
             int peerCount = peers.size();
             if (peerCount == 0) {
                 return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("No peers available.");

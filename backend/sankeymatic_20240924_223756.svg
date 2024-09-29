@@ -1,0 +1,75 @@
+<svg height="600" width="1000" xmlns="http://www.w3.org/2000/svg">
+<title>Your Diagram Title</title>
+<!-- Generated with SankeyMATIC: 2024-09-24, 10:37:56 PM -->
+<rect height="600" width="1000" fill="#ffffff"></rect>
+<g transform="translate(118.61305,18)">
+<g id="sankey_flows">
+<path id="flow0" d="M20 217.22873C153.09252 217.22873 203.79443 223.10645 336.88695 223.10645" fill="none" stroke-width="305.38286" stroke="#888888" opacity="0.45"><title>Wages → Budget: 1,500</title></path>
+<path id="flow2" d="M356.88695 116.22245C489.97947 116.22245 540.68139 45.80743 673.77391 45.80743" fill="none" stroke-width="91.61486" stroke="#d74" opacity="0.45"><title>Budget → Taxes: 450</title></path>
+<path id="flow3" d="M356.88695 204.78348C489.97947 204.78348 540.68139 175.51246 673.77391 175.51246" fill="none" stroke-width="85.5072" stroke="#888888" opacity="0.45"><title>Budget → Housing: 420</title></path>
+<path id="flow4" d="M356.88695 288.25479C489.97947 288.25479 540.68139 300.12777 673.77391 300.12777" fill="none" stroke-width="81.43543" stroke="#888888" opacity="0.45"><title>Budget → Food: 400</title></path>
+<path id="flow5" d="M356.88695 359.00182C489.97947 359.00182 540.68139 412.0188 673.77391 412.0188" fill="none" stroke-width="60.05863" stroke="#888888" opacity="0.45"><title>Budget → Transportation: 295</title></path>
+<path id="flow1" d="M20 436.51273C153.09252 436.51273 203.79443 401.24645 336.88695 401.24645" fill="none" stroke-width="50.89714" stroke="#888888" opacity="0.45"><title>Other → Budget: 250</title></path>
+<path id="flow7" d="M356.88695 411.42588C489.97947 411.42588 540.68139 546.73086 673.77391 546.73086" fill="none" stroke-width="30.53829" stroke="#197" opacity="0.45"><title>Budget → Savings: 150</title></path>
+<path id="flow6" d="M356.88695 392.59393C489.97947 392.59393 540.68139 486.75491 673.77391 486.75491" fill="none" stroke-width="7.1256" stroke="#888888" opacity="0.45"><title>Budget → Other Necessities: 35</title></path>
+</g>
+<g id="sankey_nodes">
+<g class="node">
+<rect id="r0" class="for_r0" x="0" y="64.5373" height="305.38286" width="20" fill="#888888" fill-opacity="1"><title>Wages:
+1,500</title></rect>
+</g>
+<g class="node">
+<rect id="r1" class="for_r1" x="336.88695" y="70.41502" height="356.28" width="20" fill="#888888" fill-opacity="1"><title>Budget:
+1,750</title></rect>
+</g>
+<g class="node">
+<rect id="r2" class="for_r2" x="0" y="411.06416" height="50.89714" width="20" fill="#888888" fill-opacity="1"><title>Other:
+250</title></rect>
+</g>
+<g class="node">
+<rect id="r3" class="for_r3" x="673.77391" y="0" height="91.61486" width="20" fill="#d74" fill-opacity="1"><title>Taxes:
+450</title></rect>
+</g>
+<g class="node">
+<rect id="r4" class="for_r4" x="673.77391" y="132.75886" height="85.5072" width="20" fill="#888888" fill-opacity="1"><title>Housing:
+420</title></rect>
+</g>
+<g class="node">
+<rect id="r5" class="for_r5" x="673.77391" y="259.41006" height="81.43543" width="20" fill="#888888" fill-opacity="1"><title>Food:
+400</title></rect>
+</g>
+<g class="node">
+<rect id="r6" class="for_r6" x="673.77391" y="381.98949" height="60.05863" width="20" fill="#888888" fill-opacity="1"><title>Transportation:
+295</title></rect>
+</g>
+<g class="node">
+<rect id="r7" class="for_r7" x="673.77391" y="483.19211" height="7.1256" width="20" fill="#888888" fill-opacity="1"><title>Other Necessities:
+35</title></rect>
+</g>
+<g class="node">
+<rect id="r8" class="for_r8" x="673.77391" y="531.46171" height="30.53829" width="20" fill="#197" fill-opacity="1"><title>Savings:
+150</title></rect>
+</g>
+</g>
+<g id="sankey_labels" font-family="sans-serif" font-size="25px" fill="#000000">
+<text text-anchor="middle" x="381.38695" y="577" font-size="12.5px" font-weight="400" fill="#336781">Made at SankeyMATIC.com</text>
+<rect id="label0_bg" class="for_r0" x="-106.60813" y="180.17188" width="104.05969" height="73.39063" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label0" class="for_r0" text-anchor="end" x="-9.84867" y="217.22873" font-weight="400" font-size="28.54227px" dy="-6.81813">Wages<tspan x="-9.84867" dy="32.82362" font-weight="400" font-size="28.54227px">1,500</tspan></text>
+<rect id="label1_bg" class="for_r1" x="292.04844" y="209.95313" width="110.30969" height="76.51563" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label1" class="for_r1" text-anchor="middle" x="346.88695" y="248.55502" font-weight="400" font-size="30px" dy="-7.24047">Budget<tspan x="346.88695" dy="34.5" font-weight="400" font-size="30px">1,750</tspan></text>
+<rect id="label2_bg" class="for_r2" x="-70.93625" y="408.20313" width="68.38781" height="56.20313" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label2" class="for_r2" text-anchor="end" x="-9.84867" y="436.51273" font-weight="400" font-size="21.25364px" dy="-5.18953">Other<tspan x="-9.84867" dy="24.44169" font-weight="400" font-size="21.25364px">250</tspan></text>
+<rect id="label3_bg" class="for_r3" x="696.31406" y="15.90625" width="76.29406" height="59.21875" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label3" class="for_r3" text-anchor="start" x="703.62258" y="45.80743" font-weight="400" font-size="22.41983px" dy="-5.38109">Taxes<tspan x="703.62258" dy="25.7828" font-weight="400" font-size="22.41983px">450</tspan></text>
+<rect id="label4_bg" class="for_r4" x="696.31406" y="145.8125" width="96.85656" height="58.84375" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label4" class="for_r4" text-anchor="start" x="703.62258" y="175.51246" font-weight="400" font-size="22.2449px" dy="-5.31703">Housing<tspan x="703.62258" dy="25.58163" font-weight="400" font-size="22.2449px">420</tspan></text>
+<rect id="label5_bg" class="for_r5" x="696.31406" y="270.54688" width="65.66906" height="58.57813" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label5" class="for_r5" text-anchor="start" x="703.62258" y="300.12777" font-weight="400" font-size="22.12828px" dy="-5.29078">Food<tspan x="703.62258" dy="25.44752" font-weight="400" font-size="22.12828px">400</tspan></text>
+<rect id="label6_bg" class="for_r6" x="696.31406" y="383.4375" width="153.96594" height="56.76563" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label6" class="for_r6" text-anchor="start" x="703.62258" y="412.0188" font-weight="400" font-size="21.51603px" dy="-5.26094">Transportation<tspan x="703.62258" dy="24.74344" font-weight="400" font-size="21.51603px">295</tspan></text>
+<rect id="label7_bg" class="for_r7" x="696.31406" y="459.76563" width="173.07531" height="53.51563" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label7" class="for_r7" text-anchor="start" x="703.62258" y="486.75491" font-weight="400" font-size="20px" dy="-4.82547">Other Necessities<tspan x="703.62258" dy="23" font-weight="400" font-size="20px">35</tspan></text>
+<rect id="label8_bg" class="for_r8" x="696.31406" y="519.04688" width="88.77844" height="54.95313" rx="6.25" fill="#fff" fill-opacity="0.8" stroke="none" stroke-width="0" stroke-opacity="0"></rect>
+<text id="label8" class="for_r8" text-anchor="start" x="703.62258" y="546.73086" font-weight="400" font-size="20.67055px" dy="-5.01344">Savings<tspan x="703.62258" dy="23.77114" font-weight="400" font-size="20.67055px">150</tspan></text>
+</g>
+</g></svg>
