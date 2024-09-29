@@ -47,6 +47,7 @@ const FileUpload: React.FC = () => {
 
   const [status, setStatus] = useState(0)
   const [usage, setUsage] = useState(0)
+  const [newNode, setNewNode] = useState<string>('');
 
   const handleRemoveFile = (id: string) => {
     setFile(null)
@@ -74,6 +75,20 @@ const FileUpload: React.FC = () => {
       formData.append('uuid', uuid);
 
       const response = await fetch('http://localhost:8080/broadcast', {
+        method: 'POST',
+        body: formData,
+      });
+    } catch (error) {
+      console.error('Error occurred during file build:', error);
+    }
+  };
+
+  const addNode = async (node: string) => {
+    try {
+      const formData = new FormData();
+      formData.append('tunnel', node);
+
+      const response = await fetch('http://localhost:8080/addnode', {
         method: 'POST',
         body: formData,
       });
@@ -135,6 +150,10 @@ const FileUpload: React.FC = () => {
     if (e.target.files) {
       setFile(e.target.files[0]);
     }
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewNode(e.target.value);
   };
 
   const handleTunnelUrlChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -329,6 +348,16 @@ const FileUpload: React.FC = () => {
             </div>
           </button>
         }
+        <div className="flex items-center">
+          <input
+            type="text"
+            placeholder="https://"
+            className="pl-2 border border-gray-300 rounded-md ml-2"
+            value={newNode}
+            onChange={handleInputChange}
+          />
+          <button onClick={() => addNode(newNode)} className="group ml-2 relative inline-flex h-6 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-6 font-medium text-neutral-200 duration-500"><div className="translate-x-0 transition group-hover:-translate-x-[150%]">Add Node</div><div className="absolute translate-x-[150%] transition group-hover:translate-x-0">Connect</div></button>
+        </div>
       </div>
       <div className="mb-6 animate-fade-in">
         <Label htmlFor="file-upload" className="cursor-pointer">
@@ -475,10 +504,10 @@ const FileUpload: React.FC = () => {
                 <TableCell>{file.size}</TableCell>
                 <TableCell>{file.uploadedBy}</TableCell>
                 <TableCell>
-                    <a href={`/redirect/${file.size}/${file.name}`} target="_blank">
-                      <button onClick={() => buildFile(file.size)} className="group mb-1 relative inline-flex h-6 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-2 font-medium text-neutral-200"><span>Build from Chunks</span><div className="ml-1 transition group-hover:translate-x-1"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
-                      <button onClick={() => broadcast(file.size)} className="group relative inline-flex h-6 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-2 font-medium text-neutral-200"><span>Broadcast for Chunks</span><div className="ml-1 transition group-hover:translate-x-1"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
-                    </a>
+                  <a href={`/redirect/${file.size}/${file.name}`} target="_blank">
+                    <button onClick={() => buildFile(file.size)} className="group mb-1 relative inline-flex h-6 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-2 font-medium text-neutral-200"><span>Build from Chunks</span><div className="ml-1 transition group-hover:translate-x-1"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
+                  </a>
+                  <button onClick={() => broadcast(file.size)} className="group relative inline-flex h-6 items-center justify-center overflow-hidden rounded-md bg-neutral-950 px-2 font-medium text-neutral-200"><span>Broadcast for Chunks</span><div className="ml-1 transition group-hover:translate-x-1"><svg width="15" height="15" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" className="h-5 w-5"><path d="M8.14645 3.14645C8.34171 2.95118 8.65829 2.95118 8.85355 3.14645L12.8536 7.14645C13.0488 7.34171 13.0488 7.65829 12.8536 7.85355L8.85355 11.8536C8.65829 12.0488 8.34171 12.0488 8.14645 11.8536C7.95118 11.6583 7.95118 11.3417 8.14645 11.1464L11.2929 8H2.5C2.22386 8 2 7.77614 2 7.5C2 7.22386 2.22386 7 2.5 7H11.2929L8.14645 3.85355C7.95118 3.65829 7.95118 3.34171 8.14645 3.14645Z" fill="currentColor" fill-rule="evenodd" clip-rule="evenodd"></path></svg></div></button>
                 </TableCell>
               </TableRow>
             ))}

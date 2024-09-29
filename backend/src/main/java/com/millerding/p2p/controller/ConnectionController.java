@@ -33,7 +33,7 @@ public class ConnectionController {
     @PostMapping("/addnode")
     public String addNode(@RequestParam("tunnel") String tunnelUrl) {
         ns.addNode(tunnelUrl);
-        //TODO: Add logic to verify node is safe by calling outside node's success
+        System.out.println("Added : " + tunnelUrl);
         return "Success";
     }
 
