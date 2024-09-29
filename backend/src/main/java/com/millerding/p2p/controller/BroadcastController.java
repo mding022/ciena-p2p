@@ -70,7 +70,6 @@ public class BroadcastController {
 
             RestTemplate restTemplate = new RestTemplate();
 
-            // Send each file in the UUID directory
             for (File file : files) {
                 if (file.isFile()) {
                     MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
@@ -79,8 +78,6 @@ public class BroadcastController {
                     body.add("uuid", uuid);
 
                     HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body);
-
-                    // Send the file to the specified tunnel URL
                     ResponseEntity<String> response = restTemplate.postForEntity(tunnelUrl + "/receive", requestEntity,
                             String.class);
                     if (!response.getStatusCode().is2xxSuccessful()) {

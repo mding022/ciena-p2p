@@ -35,7 +35,7 @@ public class ChunkBuilderController {
             originalFilename = jsonObject.getString("filename");
 
             String outputFilePath = new File(uuidFolder, originalFilename).getAbsolutePath();
-            String pythonScriptPath = "builder.py"; // Adjust the path to your Python script if necessary
+            String pythonScriptPath = "builder.py";
 
             ProcessBuilder processBuilder = new ProcessBuilder("python3", pythonScriptPath, uuidFolder.getAbsolutePath(),
                     outputFilePath);

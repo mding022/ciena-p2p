@@ -103,10 +103,7 @@ public class FileController {
 
     private void sendMetadata(String filename, int totalChunks, String uuid, List<String> peers) {
         try {
-            // Create metadata object
             Metadata metadata = new Metadata(filename, totalChunks, uuid);
-
-            // Serialize metadata to JSON
             ObjectMapper objectMapper = new ObjectMapper();
             String metadataJson = objectMapper.writeValueAsString(metadata);
 
@@ -115,8 +112,6 @@ public class FileController {
             try (FileOutputStream fos = new FileOutputStream(metadataFile)) {
                 fos.write(metadataJson.getBytes());
             }
-
-            // Send metadata.json to all peers
             RestTemplate restTemplate = new RestTemplate();
             for (String peerUrl : peers) {
                 MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
@@ -132,8 +127,6 @@ public class FileController {
                     System.err.println("Failed to send metadata to peer: " + peerUrl);
                 }
             }
-
-            // Clean up metadata.json file after sending
             metadataFile.delete();
 
         } catch (IOException e) {

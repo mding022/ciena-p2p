@@ -1,5 +1,6 @@
 package com.millerding.p2p.model;
 
+//Spring bean pojo
 public class Metadata {
     private String filename;
     private int totalChunks;
@@ -11,7 +12,6 @@ public class Metadata {
         this.uuid = uuid;
     }
 
-    // Getters and Setters
     public String getFilename() {
         return filename;
     }

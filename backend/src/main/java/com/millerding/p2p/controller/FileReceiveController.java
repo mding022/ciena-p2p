@@ -14,7 +14,6 @@ import java.util.UUID;
 @CrossOrigin("http://localhost:3000")
 public class FileReceiveController {
 
-    // Endpoint to receive a file chunk and save it in a folder with UUID
     @PostMapping("/receive")
     public ResponseEntity<String> receiveFile(
             @RequestParam("file") MultipartFile file,
@@ -26,18 +25,15 @@ public class FileReceiveController {
         }
 
         try {
-            // Generate a new UUID if none is provided
             if (uuid == null || uuid.isEmpty()) {
                 uuid = UUID.randomUUID().toString();
             }
 
-            // Create a directory with the UUID name
             File directory = new File("src/main/resources/static/" + uuid);
             if (!directory.exists()) {
-                directory.mkdirs(); // Create the directory if it doesn't exist
+                directory.mkdirs();
             }
 
-            // Save the received file chunk in the directory
             File receivedFile = new File(directory, filename);
             try (FileOutputStream fos = new FileOutputStream(receivedFile)) {
                 fos.write(file.getBytes());
