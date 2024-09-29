@@ -1,23 +1,32 @@
 package com.millerding.p2p.service;
 
-import java.util.ArrayList;
-
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class NodeService {
-    private ArrayList<String> nodes = new ArrayList<String>();
 
-    public ArrayList<String> getNodes() {
-        return nodes;
+    private List<String> peerNodes;
+
+    public NodeService() {
+        peerNodes = new ArrayList<>();
     }
 
-    public void addNode(String tunnelUrl) {
-        nodes.add(tunnelUrl);
+    public List<String> getNodes() {
+        return peerNodes;
     }
 
-    public void removeNode(String tunnelUrl) { 
-        nodes.remove(tunnelUrl);
+    public void setNodes(List<String> nodes) {
+        this.peerNodes = nodes;
     }
-    
+
+    public void addNode(String node) {
+        this.peerNodes.add(node);
+    }
+
+    public void removeNode(String node) {
+        this.peerNodes.remove(node);
+    }
 }

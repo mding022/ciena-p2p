@@ -1,5 +1,6 @@
 package com.millerding.p2p.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,12 +16,15 @@ public class ConnectionController {
 
     TunnelService ts = new TunnelService();
 
-    NodeService ns = new NodeService();
+    @Autowired
+    private NodeService ns;
 
     @GetMapping("/auth")
     public String connect() {
         try {
-            return ts.createTunnel().get();
+            String selfNode = ts.createTunnel().get();
+            ns.addNode(selfNode);
+            return selfNode;
         } catch (Exception e) {
             return e.getMessage();
         }
