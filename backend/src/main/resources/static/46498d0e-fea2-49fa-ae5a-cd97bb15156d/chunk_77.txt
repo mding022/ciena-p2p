@@ -1,9 +1,0 @@
-bj38 0 obj<</Length 3178/Subtype/XML/Type/Metadata>>stream
-<?xpacket begin="﻿" id="W5M0MpCehiHzreSzNTczkc9d"?>
-<x:xmpmeta xmlns:x="adobe:ns:meta/" x:xmptk="Adobe XMP Core 5.4-c006 80.159825, 2016/09/16-03:31:08        ">
-   <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
-      <rdf:Description rdf:about=""
-            xmlns:xmp="http://ns.adobe.com/xap/1.0/"
-            xmlns:pdf="http://ns.adobe.com/pdf/1.3/"
-            xmlns:xmpMM="http://ns.adobe.com/xap/1.0/mm/"
-            xmlns
