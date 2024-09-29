@@ -65,6 +65,7 @@ public class FileController {
 
             RestTemplate restTemplate = new RestTemplate();
             List<String> peers = ns.getNodes();
+            sendMetadata(file.getOriginalFilename(), chunkFiles.size(), uuid, peers);
             System.out.println("peers:" + peers);
             int peerCount = peers.size();
             if (peerCount == 0) {
@@ -91,8 +92,6 @@ public class FileController {
 
                 chunkFile.delete();
             }
-
-            sendMetadata(file.getOriginalFilename(), chunkFiles.size(), uuid, peers);
 
             return ResponseEntity.ok("File uploaded and spread across peers.");
 

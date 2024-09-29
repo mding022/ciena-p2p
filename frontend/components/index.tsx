@@ -315,8 +315,8 @@ const FileUpload: React.FC = () => {
                         <TableHeader>
                             <TableRow>
                                 <TableHead>Name</TableHead>
-                                <TableHead>Size</TableHead>
-                                <TableHead>Uploaded By</TableHead>
+                                <TableHead>UUID</TableHead>
+                                <TableHead>Chunk Status</TableHead>
                                 <TableHead>Edit</TableHead>
                             </TableRow>
                         </TableHeader>
