@@ -10,6 +10,8 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.millerding.p2p.model.Metadata;
 import com.millerding.p2p.service.FileChunkService;
 import com.millerding.p2p.service.NodeService;
 
@@ -74,11 +76,53 @@ public class FileController {
                 chunkFile.delete();
             }
 
+            sendMetadata(file.getOriginalFilename(), chunks.size(), uuid, peers);
+
             return ResponseEntity.ok("File uploaded and spread across peers.");
 
         } catch (IOException e) {
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("File upload failed.");
+        }
+    }
+
+    private void sendMetadata(String filename, int totalChunks, String uuid, List<String> peers) {
+        try {
+            // Create metadata object
+            Metadata metadata = new Metadata(filename, totalChunks, uuid);
+
+            // Serialize metadata to JSON
+            ObjectMapper objectMapper = new ObjectMapper();
+            String metadataJson = objectMapper.writeValueAsString(metadata);
+
+            // Create metadata.json file
+            File metadataFile = new File("metadata.json");
+            try (FileOutputStream fos = new FileOutputStream(metadataFile)) {
+                fos.write(metadataJson.getBytes());
+            }
+
+            // Send metadata.json to all peers
+            RestTemplate restTemplate = new RestTemplate();
+            for (String peerUrl : peers) {
+                MultiValueMap<String, Object> body = new LinkedMultiValueMap<>();
+                body.add("file", new FileSystemResource(metadataFile));
+                body.add("filename", "metadata.json");
+                body.add("uuid", uuid);
+
+                HttpEntity<MultiValueMap<String, Object>> requestEntity = new HttpEntity<>(body);
+                ResponseEntity<String> response = restTemplate.postForEntity(peerUrl + "/receive",
+                        requestEntity, String.class);
+
+                if (!response.getStatusCode().is2xxSuccessful()) {
+                    System.err.println("Failed to send metadata to peer: " + peerUrl);
+                }
+            }
+
+            // Clean up metadata.json file after sending
+            metadataFile.delete();
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 }
