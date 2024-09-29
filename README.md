@@ -1,7 +1,7 @@
 
 # Ciena P2P File Sharing
 
-Ciena's peer-to-peer file sharing protocol challenge for Hack the Hill 2024. Built with Spring Boot for backend, and Next.js for the frontend.
+Ciena's peer-to-peer file sharing protocol challenge for Hack the Hill 2024. Built with Spring Boot for backend file transfering using HTTPS requests, and Next.js for the frontend.
 
 
 
