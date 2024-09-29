@@ -36,3 +36,8 @@ The backend runs on localhost:8080 and the frontend runs on localhost:3000.
 - Building a file will run a python script to build the file. The script will search for the metadata.json to know what the original file information is.
 - The files can be accessed by the frontend by the Spring server's public static files after building.
 
+## Unfinished TODOs
+
+- Add data usage tracker to monitor network activity
+- Add a way to exchange requests when adding a new node and verify node exists, so that one user can send a request to pair both.
+- Add CORS filtering for existing tunnels only for added security.
