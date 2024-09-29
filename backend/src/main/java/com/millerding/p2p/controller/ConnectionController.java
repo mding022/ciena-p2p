@@ -2,14 +2,20 @@ package com.millerding.p2p.controller;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.millerding.p2p.service.NodeService;
 import com.millerding.p2p.service.TunnelService;
 
 @RestController
 @CrossOrigin("http://localhost:3000")
 public class ConnectionController {
+
     TunnelService ts = new TunnelService();
+
+    NodeService ns = new NodeService();
 
     @GetMapping("/auth")
     public String connect() {
@@ -18,6 +24,13 @@ public class ConnectionController {
         } catch (Exception e) {
             return e.getMessage();
         }
+    }
+
+    @PostMapping("/addnode")
+    public String addNode(@RequestParam("tunnel") String tunnelUrl) {
+        ns.addNode(tunnelUrl);
+        //TODO: Add logic to verify node is safe by calling outside node's success
+        return "Success";
     }
 
     @GetMapping("/")
