@@ -34,6 +34,7 @@ public class ConnectionController {
     public String addNode(@RequestParam("tunnel") String tunnelUrl) {
         ns.addNode(tunnelUrl);
         System.out.println("Added : " + tunnelUrl);
+        //TODO: Add logic to exchange addNode request so that both users will not have to auth each other.
         return "Success";
     }
 
